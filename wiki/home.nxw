@@ -1,4 +1,8 @@
 # FireOnyx Nova RISC Architecture #
 Nova is a cutting-edge processor architecture that has been meticulously crafted for use in high-end commercial, critical, and life-threatening situations. This state-of-the-art technology has been developed with two primary objectives in mind: first, to deliver unparalleled levels of security to safeguard against potential threats, and second, to be fully immune to undefined behavior, ensuring maximum stability and reliability in even the most demanding applications. Whether you're operating in a high-stakes commercial environment or facing life-threatening scenarios, Nova is the ultimate choice for top-tier performance and unrivaled dependability.
 
-This architecture standard was specificly designed for the FireOnyx Zenith processor family.
+-n-
+This architecture standard was specificly designed for the FireOnyx Zenith processor family. Implementation of this architecture in other third party application is possible, but not recommended. This wiki is intended for use by people who are learning to develop with the Nova architecture or people working on Zenith.
+-n-
+
+{ next: prerequisites }
