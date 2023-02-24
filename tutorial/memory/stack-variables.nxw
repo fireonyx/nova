@@ -2,11 +2,15 @@
 It's important that you have a good concept for the memory stack and heap.
 
 ```asm
-boot:
-    sub(sp, 1); // Subtract 1 from the stack pointer.
-    move(&sp, 17); // Write the decimal number, 17 to the address stored in `sp`.
+boot {
+    push(bp); // Store the base pointer so it can be restored later.
+    move(bp, sp); // Store the stack pointer in the base pointer, so it can access data relativly from the stack pointer at that time.
+    sub(sp, 1); // Subtract 1 from the stack pointer to allocate 1 byte.
+    move([&sp - 1], 17); // Write the decimal number, 17 to the address stored 1 above the base pointer.
     
     // Deallocate the variable.
-    move(&sp, 0); // Optional to clear the variable.
-    add(sp, 1); // Move the stack pointer back to where it started.
+    move([&bp - 1], 0); // Optional to clear the variable.
+    add(sp, 1); // Move the stack pointer back to where it started originally.
+    pop(bp);
+}
  ```
