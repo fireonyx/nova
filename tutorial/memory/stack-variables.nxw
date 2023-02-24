@@ -49,8 +49,7 @@ boot {
     move([&bp - 2], [&bp - 1]);
     
     // Add the pointer with 5.
-    move(r0, [&bp - 2]);
-    add(r0, 5);
+    add([&bp - 2], 5);
     
     // Deallocation
     move(sp, bp); // Setting `sp` to `bp` is also a valid way to fully clear the stack.
