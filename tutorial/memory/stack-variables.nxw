@@ -1,6 +1,7 @@
 # Stack Variables and Allocation #
 It's important that you have a good concept for the memory stack and heap.
 
+# Simple Variable Allocation and Dealloction 
 ```asm
 boot {
     push(bp); // Store the base pointer so it can be restored later.
@@ -9,8 +10,27 @@ boot {
     move([&sp - 1], 17); // Write the decimal number, 17 to the address stored 1 above the base pointer.
     
     // Deallocate the variable.
-    move([&bp - 1], 0); // Optional to clear the variable.
     add(sp, 1); // Move the stack pointer back to where it started originally.
+    pop(bp); // Since the sp was moved back down, its now pointing to bp which we stored earlier.
+}
+```
+ 
+# Multiple Variable Allocation
+```asm
+boot {
+    push(bp);
+    move(bp, sp);
+    sub(sp, 2); // Both variables will be 1, byte, to we are subtracting the total amount of bytes used.
+    
+    // Writing to both variables
+    move([&bp - 1], 5); // First variable.
+    move([&bp - 2], 5); // Second variable.
+    
+    // Perform calculations on the data.
+    add([&bp - 1], [&bp - 2]); // Sum is stored in [$bp - 1].
+    
+    // Deallocation.
+    add(sp, 2); // Move the stack pointer closer to the end.
     pop(bp);
 }
- ```
+```
