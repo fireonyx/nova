@@ -4,14 +4,14 @@ It's important that you have a good concept for the memory stack and heap.
 # Simple Variable Allocation and Dealloction 
 ```asm
 boot {
-    push(bp); // Store the base pointer so it can be restored later.
-    move(bp, sp); // Store the stack pointer in the base pointer, so it can access data relativly from the stack pointer at that time.
-    sub(sp, 1); // Subtract 1 from the stack pointer to allocate 1 byte.
-    move([&sp - 1], 17); // Write the decimal number, 17 to the address stored 1 above the base pointer.
+    push(bp); // Store `bp` so it can be restored later.
+    move(bp, sp); // Store `sp` in the base pointer, so it can access data relativly from `sp` at that time.
+    sub(sp, 1); // Subtract 1 from `sp` to allocate 1 byte.
+    move([&sp - 1], 17); // Write the decimal number, 17 to the address stored 1 above `bp`.
     
     // Deallocate the variable.
-    add(sp, 1); // Move the stack pointer back to where it started originally.
-    pop(bp); // Since the sp was moved back down, its now pointing to bp which we stored earlier.
+    add(sp, 1); // Move `sp` back to where it started originally.
+    pop(bp); // Since the `sp` was moved back down, its now pointing to `bp` which we stored earlier.
 }
 ```
  
@@ -27,10 +27,33 @@ boot {
     move([&bp - 2], 5); // Second variable.
     
     // Perform calculations on the data.
-    add([&bp - 1], [&bp - 2]); // Sum is stored in [$bp - 1].
+    add([&bp - 1], [&bp - 2]); // Sum is stored in `[$bp - 1]`.
     
     // Deallocation.
     add(sp, 2); // Move the stack pointer closer to the end.
+    pop(bp);
+}
+```
+
+# Stack Variable Pointing to Another Variable
+```asm
+boot {
+    push(bp);
+    move(bp, sp);
+    sub(sp, 2);
+    
+    // Definition of value.
+    move([&bp - 1], 5);
+    
+    // Pointer
+    move([&bp - 2], [&bp - 1]);
+    
+    // Add the pointer with 5.
+    move(r0, [&bp - 2]);
+    add(r0, 5);
+    
+    // Deallocation
+    move(sp, bp); // Setting `sp` to `bp` is also a valid way to fully clear the stack.
     pop(bp);
 }
 ```
