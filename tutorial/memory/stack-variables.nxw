@@ -1,1 +1,12 @@
+# Stack Variables and Allocation #
+It's important that you have a good concept for the memory stack and heap.
 
+```asm
+boot:
+    sub(sp, 1); // Subtract 1 from the stack pointer.
+    move(&sp, 17); // Write the decimal number, 17 to the address stored in `sp`.
+    
+    // Deallocate the variable.
+    move(&sp, 0); // Optional to clear the variable.
+    add(sp, 1); // Move the stack pointer back to where it started.
+ ```
